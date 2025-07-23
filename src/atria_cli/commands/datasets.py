@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import click
-from atria_core.constants import _DEFAULT_ATRIA_DATASETS_CACHE_DIR
 from atria_core.logger import get_logger
 
 if TYPE_CHECKING:
@@ -16,7 +14,7 @@ logger = get_logger(__name__)
 
 def prepare_and_upload(
     name: str,
-    config_name: str | None = None,
+    config_name: str = "default",
     branch: str = "main",
     is_public: bool = False,
     data_dir: str | None = None,
@@ -38,7 +36,7 @@ def prepare_and_upload(
     try:
         from atria_datasets import AtriaDataset
 
-        logger.info(f"Loading dataset: {name}")
+        logger.info(f"Preparing dataset {name} for upload to Atria Hub...")
         dataset: AtriaDataset = AtriaDataset.load_from_registry(
             name=name,
             config_name=config_name,
@@ -66,52 +64,23 @@ def prepare_and_upload(
         logger.exception(e)
 
 
-@click.command()
-@click.option(
-    "--name", required=True, type=str, help="Name of the dataset to download."
-)
-@click.option(
-    "--config-name",
-    required=False,
-    type=str,
-    default="default",
-    help="Name of the config to download.",
-)
-@click.option(
-    "--data-dir",
-    required=False,
-    type=str,
-    default=None,
-    help="Directory to download the dataset to.",
-)
-@click.option(
-    "--overwrite-existing",
-    is_flag=True,
-    default=False,
-    help="Whether to overwrite existing dataset.",
-)
-def download_dataset(
+def download(
     name: str,
-    config_name: str | None = "default",
+    config_name: str = "default",
+    branch: str = "main",
     data_dir: str | None = None,
     overwrite_existing: bool = False,
 ):
     """
     Downloads a model from the Atria Hub.
     """
-    from atria.data.datasets.atria_dataset import AtriaDataset
+    from atria_datasets import AtriaHubDataset, DatasetLoadingMode
 
-    try:
-        if data_dir is None:
-            data_dir = _DEFAULT_ATRIA_DATASETS_CACHE_DIR / name
-            logger.info(f"Data directory not provided. Using default: {data_dir}")
-
-        AtriaDataset.load_from_hub(
-            name=name,
-            config_name=config_name,
-            data_dir=data_dir,
-            overwrite_existing=overwrite_existing,
-            streaming_mode=False,
-        )
-    except Exception as e:
-        logger.exception("Failed to upload model:", exc_info=e)
+    logger.info(f"Downloading dataset {name} from Atria Hub...")
+    AtriaHubDataset.load_from_hub(
+        name=name,
+        branch=branch,
+        config_name=config_name,
+        data_dir=data_dir,
+        dataset_load_mode=DatasetLoadingMode.local_streaming,
+    )
