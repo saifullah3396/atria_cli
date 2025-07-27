@@ -14,6 +14,8 @@ dependencies = [
     "atria-core",
     "atria-datasets",
     "atria-hub",
+    "atria-models",
+    "deepdiff>=8.5.0",
     "fire>=0.7.0",
     "tuna>=0.5.11",
 ]
@@ -110,9 +112,10 @@ conflicts = [
 ]
 
 [tool.uv.sources]
-atria-hub = { path = "../atria_hub", editable = true }
 atria-core = { path = "../atria_core", editable = true }
 atria-datasets = { path = "../atria_datasets", editable = true }
+atria-models = { path = "../atria_models", editable = true }
+atria-hub = { path = "../atria_hub", editable = true }
 
 
 [dependency-groups]

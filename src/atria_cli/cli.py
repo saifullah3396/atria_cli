@@ -1,7 +1,7 @@
 import fire
 from atria_core.logger import get_logger
 
-from atria_cli.commands.datasets import download, prepare_and_upload
+from atria_cli.commands import datasets, models
 from atria_cli.commands.sign_in import sign_in
 from atria_cli.commands.sign_out import sign_out
 from atria_cli.commands.sign_up import sign_up
@@ -16,8 +16,9 @@ if __name__ == "__main__":
             "sign_out": sign_out,
             "sign_up": sign_up,
             "datasets": {
-                "prepare_and_upload": prepare_and_upload,
-                "download": download,
+                "prepare_and_upload": datasets.prepare_and_upload,
+                "download": datasets.download,
             },
+            "models": {"upload": models.upload, "download": models.download},
         }
     )

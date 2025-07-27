@@ -69,7 +69,6 @@ def download(
     config_name: str = "default",
     branch: str = "main",
     data_dir: str | None = None,
-    overwrite_existing: bool = False,
 ):
     """
     Downloads a model from the Atria Hub.
