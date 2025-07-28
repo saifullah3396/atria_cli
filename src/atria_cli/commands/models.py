@@ -31,7 +31,7 @@ def upload(
         build_config = checkpoint["model_pipeline"]["atria_config"]
         model_pipeline: AtriaModelPipeline = instantiate_object_from_config(
             build_config
-        ).build()
+        ).build_from_checkpoint(checkpoint=checkpoint["model_pipeline"])
 
         # Make sure that the model pipeline is built correctly and matches the checkpoint
         diff = deepdiff.DeepDiff(
@@ -69,11 +69,6 @@ def download(
     """
     from atria_models.pipelines.atria_model_pipeline import AtriaModelPipeline
 
-    AtriaModelPipeline.load_from_hub(
-        name=name,
-        branch=branch,
-        config_name=config_name,
-        download_dir=download_dir,
-        save_to_disk=True,
-        instantiate=False,
+    AtriaModelPipeline.download_from_hub(
+        name=name, branch=branch, config_name=config_name, download_dir=download_dir
     )
