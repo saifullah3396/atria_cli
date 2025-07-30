@@ -106,10 +106,10 @@ xfail_strict = true         # Treat tests that are marked as xfail but pass as t
 managed = true
 
 [tool.uv.sources]
-atria-core = { path = "https://github.com/saifullah3396/atria_core" }
-atria-datasets = { path = "https://github.com/saifullah3396/atria_datasets" }
-atria-models = { path = "https://github.com/saifullah3396/atria_models" }
-atria-hub = { path = "https://github.com/saifullah3396/atria_hub" }
+atria-core = { git = "https://github.com/saifullah3396/atria_core.git" }
+atria-datasets = { git = "https://github.com/saifullah3396/atria_datasets.git" }
+atria-models = { git = "https://github.com/saifullah3396/atria_models.git" }
+atria-hub = { git = "https://github.com/saifullah3396/atria_hub.git" }
 
 
 [dependency-groups]
